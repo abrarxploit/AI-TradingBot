@@ -57,7 +57,7 @@ trading_bot/
 ### 1️⃣ Clone Repository
 
 ```
-git clone <your-repo-url>
+git clone <https://github.com/abrarxploit/AI-TradingBot>
 cd trading_bot
 ```
 
@@ -139,6 +139,11 @@ Status: NEW
 ---
 
 ## 📁 Logging
+The log file captures:
+- API request payloads
+- API responses
+- Error scenarios (invalid keys, timestamp issues, etc.)
+
 
 Logs are stored in:
 
@@ -146,11 +151,7 @@ Logs are stored in:
 logs/bot.log
 ```
 
-Includes:
 
-* API request details
-* API responses
-* Errors and exceptions
 
 ---
 
@@ -190,6 +191,6 @@ Includes:
 
 ## 👨‍💻 Author
 
-Developed as part of a technical assessment for a Python Developer role.
+abrarxploit
 
 ---
