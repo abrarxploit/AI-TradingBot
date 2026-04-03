@@ -1,7 +1,8 @@
-# 🚀 Binance Futures Trading Bot (Testnet)
+# 🚀 Binance Futures Testnet Trading Bot
 
-A simplified Python-based trading bot that interacts with the Binance Futures Testnet (USDT-M).
-The bot supports MARKET and LIMIT orders, includes structured logging, input validation, and an AI-based trading signal using RSI.
+A clean, modular Python trading bot for Binance USDT-M Futures **Testnet**.
+Supports MARKET, LIMIT, and STOP_MARKET orders with RSI-based AI signals,
+structured logging, and full input validation.
 
 ---
 
@@ -33,21 +34,20 @@ The bot fetches real-time market data (klines), calculates RSI, and dynamically 
 
 ```
 trading_bot/
-│
 ├── bot/
-│   ├── client.py        # Binance client wrapper
-│   ├── orders.py        # Order execution logic
-│   ├── validators.py    # Input validation
-│   ├── logging_config.py
-│   ├── ai_signal.py     # RSI-based AI signal
-│
+│   ├── __init__.py
+│   ├── ai_signal.py       # RSI-based BUY/SELL/HOLD signal
+│   ├── client.py          # Binance client wrapper
+│   ├── logging_config.py  # Rotating file + console logging
+│   ├── orders.py          # Order logic + OrderResult dataclass
+│   └── validators.py      # Input validation
 ├── logs/
-│   └── bot.log
-│
-├── cli.py               # CLI entry point
+│   └── bot.log            # Auto-created on first run
+├── cli.py                 # CLI entry point (Click)
+├── .env                   # API credentials (never commit)
+├── .gitignore
 ├── requirements.txt
-├── README.md
-└── .env (not included)
+└── README.md
 ```
 <img width="230" height="364" alt="Screenshot 2026-04-03 122120" src="https://github.com/user-attachments/assets/4ae3ab86-a52c-462a-8714-7b5db23970cf" />
 
@@ -64,14 +64,16 @@ cd trading_bot
 
 ---
 
-### 2️⃣ Create Virtual Environment
-
-```
+### 2️⃣Create virtual environment
+```bash
 python -m venv venv
-venv\Scripts\activate   # Windows
-```
 
----
+# Mac/Linux
+source venv/bin/activate
+
+# Windows
+venv\Scripts\activate
+```
 
 ### 3️⃣ Install Dependencies
 
@@ -109,6 +111,8 @@ API_SECRET=your_testnet_secret_key
 ```
 python cli.py --symbol BTCUSDT --side BUY --order_type MARKET --quantity 0.002
 ```
+<img width="1756" height="631" alt="Screenshot 2026-04-03 133803" src="https://github.com/user-attachments/assets/2034ce43-7bb0-437c-aad2-1aaa9993c4fc" />
+
 
 ---
 
@@ -117,21 +121,20 @@ python cli.py --symbol BTCUSDT --side BUY --order_type MARKET --quantity 0.002
 ```
 python cli.py --symbol BTCUSDT --side SELL --order_type LIMIT --quantity 0.002 --price 65000
 ```
+<img width="1471" height="552" alt="Screenshot 2026-04-03 133848" src="https://github.com/user-attachments/assets/09df05a0-652f-4367-9735-d1945ebd1a66" />
 
 ---
 
-## 📊 Sample Output
-
-<img width="1628" height="352" alt="Screenshot 2026-04-03 123158" src="https://github.com/user-attachments/assets/ffe59eeb-6766-493d-9262-44a8fe6b16f7" />
+### AI SIGNAL Usage
 
 
 ```
-🤖 AI Signal: SELL
-⚡ Using AI Signal → New Side: SELL
+🤖 AI Signal: HOLD
+⚡ Using AI Signal → New Side: HOLD
 
 🔹 Order Request Summary
 Symbol: BTCUSDT
-Side: SELL
+Side: HOLD
 Type: MARKET
 Quantity: 0.002
 
@@ -139,7 +142,8 @@ Quantity: 0.002
 Order ID: XXXXX
 Status: NEW
 ```
-<img width="1078" height="421" alt="Screenshot 2026-04-03 122055" src="https://github.com/user-attachments/assets/42cb4786-a013-46d4-a214-826b390324d4" />
+<img width="1864" height="131" alt="Screenshot 2026-04-03 134035" src="https://github.com/user-attachments/assets/ee1070e8-449e-4692-a3d9-c7fe2a1b890f" />
+
 
 ---
 
