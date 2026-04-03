@@ -1,4 +1,4 @@
-# 🚀 Binance Futures Testnet Trading Bot
+# Binance Futures Testnet Trading Bot
 
 A clean, modular Python trading bot for Binance USDT-M Futures **Testnet**.
 Supports MARKET, LIMIT, and STOP_MARKET orders with RSI-based AI signals,
@@ -6,7 +6,7 @@ structured logging, and full input validation.
 
 ---
 
-## 📌 Features
+## Features
 
 * ✅ Place **MARKET** and **LIMIT** orders
 * ✅ Supports **BUY** and **SELL** sides
@@ -18,7 +18,7 @@ structured logging, and full input validation.
 
 ---
 
-## 🧠 AI Signal Logic
+## AI Signal Logic
 
 RSI (Relative Strength Index) is calculated from the last 100 candles:
 
@@ -57,7 +57,7 @@ trading_bot/
 
 ---
 
-## ⚙️ Setup Instructions
+##  Setup Instructions
 
 ### 1️⃣ Clone Repository
 
@@ -108,7 +108,7 @@ API_SECRET=your_testnet_secret_key
 
 ---
 
-## ▶️ Usage
+## Usage
 
 ### ✅ MARKET Order
 
@@ -163,37 +163,36 @@ cat logs/bot.log
 ## 🛡️ Security
 
 - Credentials stored in `.env` only — never hardcoded
-- `.env` excluded via `.gitignore`
-- Testnet only — no real funds involved
+- `.env` excluded via `.gitignore`.
+- Testnet only. No real funds involved.
+
+---
+## Notes
+
+* This bot uses **Binance Futures Testnet** (no real money involved).
+* Minimum order notional must be ≥ 100 USDT.
+* LIMIT orders may remain unfilled, depending on market conditions.
 
 ---
 
-## ⚠️ Notes
+## Key Highlights
 
-* This bot uses **Binance Futures Testnet** (no real money involved)
-* Minimum order notional must be ≥ 100 USDT
-* LIMIT orders may remain unfilled depending on market conditions
-
----
-
-## 🎯 Key Highlights
-
-* Clean and modular architecture
-* Real-world API handling and error management
-* AI-enhanced decision-making using technical indicators
+* Clean and modular architecture.
+* Real-world API handling and error management.
+* AI-enhanced decision-making using technical indicators.
 
 ---
 
-## 🚀 Future Improvements
+##  Future Improvements
 
-- Automated trading loop with configurable interval
-- Additional indicators (MACD, Bollinger Bands)
-- Web dashboard for order monitoring
-- Stop-Limit / OCO order support
-- Backtesting module
+- Automated trading loop with configurable interval.
+- Additional indicators (MACD, Bollinger Bands).
+- Web dashboard for order monitoring.
+- Stop-Limit / OCO order support.
+- Backtesting module.
 ---
 
-## 👨‍💻 Author
+## Author
 
 abrarxploit
 
