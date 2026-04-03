@@ -18,19 +18,19 @@ def run(symbol, side, order_type, quantity, price):
     try:
         validate_input(symbol, side, order_type, quantity, price)
 
-        # ✅ Create Binance object
+        #  Create Binance object
         binance = BinanceClient()
         client = binance.get_client()
 
-        # ✅ Fetch market data for AI
+        #  Fetch market data for AI
         klines = binance.get_klines(symbol)
         prices = [float(k[4]) for k in klines]
 
-        # ✅ Get AI signal
+        #  Get AI signal
         signal = get_signal(prices)
         print(f"\n🤖 AI Signal: {signal}")
 
-        # ✅ Optional: Override side using AI
+        #  Optional: Override side using AI
         if signal != "HOLD":
             side = signal
             print(f"⚡ Using AI Signal → New Side: {side}")
