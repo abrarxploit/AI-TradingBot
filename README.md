@@ -49,6 +49,7 @@ trading_bot/
 ├── README.md
 └── .env (not included)
 ```
+<img width="230" height="364" alt="Screenshot 2026-04-03 122120" src="https://github.com/user-attachments/assets/4ae3ab86-a52c-462a-8714-7b5db23970cf" />
 
 ---
 
@@ -121,6 +122,9 @@ python cli.py --symbol BTCUSDT --side SELL --order_type LIMIT --quantity 0.002 -
 
 ## 📊 Sample Output
 
+<img width="1628" height="352" alt="Screenshot 2026-04-03 123158" src="https://github.com/user-attachments/assets/ffe59eeb-6766-493d-9262-44a8fe6b16f7" />
+
+
 ```
 🤖 AI Signal: SELL
 ⚡ Using AI Signal → New Side: SELL
@@ -135,6 +139,7 @@ Quantity: 0.002
 Order ID: XXXXX
 Status: NEW
 ```
+<img width="1078" height="421" alt="Screenshot 2026-04-03 122055" src="https://github.com/user-attachments/assets/42cb4786-a013-46d4-a214-826b390324d4" />
 
 ---
 
