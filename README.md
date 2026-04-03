@@ -20,13 +20,17 @@ structured logging, and full input validation.
 
 ## 🧠 AI Signal Logic
 
-The bot includes a basic AI-driven signal using **RSI (Relative Strength Index)**:
+RSI (Relative Strength Index) is calculated from the last 100 candles:
 
-* RSI < 30 → **BUY**
-* RSI > 70 → **SELL**
-* Otherwise → **HOLD**
+| RSI Value | Signal |
+|-----------|--------|
+| Below 30  | BUY (oversold) |
+| Above 70  | SELL (overbought) |
+| 30 – 70   | HOLD (no trade) |
 
-The bot fetches real-time market data (klines), calculates RSI, and dynamically adjusts the trade direction.
+Use `--use-ai` flag to activate. If the AI signal differs from your `--side`,
+the bot will ask for confirmation before overriding.
+
 
 ---
 
@@ -125,50 +129,42 @@ python cli.py --symbol BTCUSDT --side SELL --order_type LIMIT --quantity 0.002 -
 
 ---
 
-### AI SIGNAL Usage
+### ✅ AI SIGNAL Usage (RSI)
 
 
 ```
-🤖 AI Signal: HOLD
-⚡ Using AI Signal → New Side: HOLD
+python cli.py place --symbol BTCUSDT --side BUY --order-type MARKET --quantity 0.002 --use-ai
 
-🔹 Order Request Summary
-Symbol: BTCUSDT
-Side: HOLD
-Type: MARKET
-Quantity: 0.002
-
-✅ Order Placed Successfully!
-Order ID: XXXXX
-Status: NEW
 ```
 <img width="1864" height="131" alt="Screenshot 2026-04-03 134035" src="https://github.com/user-attachments/assets/ee1070e8-449e-4692-a3d9-c7fe2a1b890f" />
 
-
 ---
-
+### Help
+```bash
+python cli.py --help
+python cli.py place --help
+```
+---
 ## 📁 Logging
-The log file captures:
-- API request payloads
-- API responses
-- Error scenarios (invalid keys, timestamp issues, etc.)
 
+Logs are saved to `logs/bot.log` automatically.
+- File captures **DEBUG and above** (full request/response detail)
+- Console shows **WARNING and above** (clean output)
+- Rotating: 5 MB max, 3 backups kept
 
-Logs are stored in:
-
+View logs:
+```bash
+cat logs/bot.log
 ```
-logs/bot.log
-```
-
 
 
 ---
 
 ## 🛡️ Security
 
-* API keys are stored using environment variables (`.env`)
-* Sensitive data is excluded via `.gitignore`
-* No credentials are hardcoded
+- Credentials stored in `.env` only — never hardcoded
+- `.env` excluded via `.gitignore`
+- Testnet only — no real funds involved
 
 ---
 
@@ -185,17 +181,16 @@ logs/bot.log
 * Clean and modular architecture
 * Real-world API handling and error management
 * AI-enhanced decision-making using technical indicators
-* Ready for extension (Stop-Limit, automation, etc.)
 
 ---
 
 ## 🚀 Future Improvements
 
-* Add Stop-Limit / OCO orders
-* Implement automated trading loop
-* Integrate advanced ML models
-* Add web-based dashboard
-
+- Automated trading loop with configurable interval
+- Additional indicators (MACD, Bollinger Bands)
+- Web dashboard for order monitoring
+- Stop-Limit / OCO order support
+- Backtesting module
 ---
 
 ## 👨‍💻 Author
