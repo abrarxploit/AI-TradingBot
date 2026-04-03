@@ -62,8 +62,8 @@ trading_bot/
 ### 1️⃣ Clone Repository
 
 ```
-git clone <https://github.com/abrarxploit/AI-TradingBot>
-cd trading_bot
+git clone https://github.com/abrarxploit/AI-TradingBot
+cd AI-TradingBot
 ```
 
 ---
