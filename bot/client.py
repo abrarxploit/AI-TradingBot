@@ -1,16 +1,7 @@
-"""
-client.py — Binance Futures Testnet client wrapper.
-
-Wraps python-binance to provide:
-  - Safe credential loading from .env
-  - Testnet configuration
-  - Kline fetching
-  - Order placement
-  - Structured logging throughout
-"""
 
 import logging
 import os
+from typing import List, Dict, Any
 
 from binance.client import Client
 from binance.exceptions import BinanceAPIException, BinanceRequestException
@@ -27,10 +18,6 @@ class BinanceClientError(Exception):
 class BinanceClient:
     """
     Wrapper around python-binance Client for Futures Testnet.
-
-    Credentials are loaded from environment variables:
-        API_KEY     — Binance Futures Testnet API key
-        API_SECRET  — Binance Futures Testnet API secret
     """
 
     def __init__(self):
@@ -40,36 +27,30 @@ class BinanceClient:
         if not api_key or not api_secret:
             raise BinanceClientError(
                 "API_KEY and API_SECRET must be set in your .env file.\n"
-                "  Example:\n"
-                "    API_KEY=your_testnet_api_key\n"
-                "    API_SECRET=your_testnet_api_secret\n"
-                "  Register at: https://testnet.binancefuture.com"
+                "Example:\n"
+                "API_KEY=your_testnet_api_key\n"
+                "API_SECRET=your_testnet_api_secret\n"
+                "Register at: https://testnet.binancefuture.com"
             )
 
-        # testnet=True automatically routes to testnet.binancefuture.com
         self._client = Client(api_key, api_secret, testnet=True)
         logger.info("BinanceClient initialised — testnet=True")
 
-    # ── Market data ────────────────────────────────────────────────────────────
+    # ── Market data ─────────────────────────────────────────
 
-    def get_klines(self, symbol: str, interval: str = "1m", limit: int = 100) -> list:
-        """
-        Fetch OHLCV candlestick data for a symbol.
-
-        Args:
-            symbol:   Trading pair, e.g. "BTCUSDT"
-            interval: Candlestick interval, e.g. "1m", "5m", "1h"
-            limit:    Number of candles to fetch (default 100)
-
-        Returns:
-            List of kline arrays from Binance
-        """
-        logger.info("Fetching klines — symbol=%s interval=%s limit=%s", symbol, interval, limit)
+    def get_klines(
+        self, symbol: str, interval: str = "1m", limit: int = 100
+    ) -> List[List[Any]]:
+        logger.info(
+            "Fetching klines — symbol=%s interval=%s limit=%s",
+            symbol,
+            interval,
+            limit,
+        )
         try:
             klines = self._client.futures_klines(
                 symbol=symbol, interval=interval, limit=limit
             )
-            logger.debug("Klines received — count=%d", len(klines))
             return klines
         except BinanceAPIException as e:
             logger.error("Klines API error — code=%s msg=%s", e.code, e.message)
@@ -78,37 +59,14 @@ class BinanceClient:
             logger.error("Klines network error — %s", e)
             raise
 
-    # ── Order placement ────────────────────────────────────────────────────────
+    # ── Order placement ─────────────────────────────────────
 
-    def create_order(self, **kwargs) -> dict:
-        """
-        Place a futures order.
-
-        Accepts all standard Binance futures_create_order parameters.
-        Keeps the raw client private — callers use this method only.
-
-        Returns:
-            Raw Binance API order response dict
-
-        Raises:
-            BinanceAPIException: on API-level errors (e.g. insufficient margin)
-            BinanceRequestException: on network failures
-        """
-        # Log request without exposing sensitive data
-        loggable = {k: v for k, v in kwargs.items()}
-        logger.info("Placing order — params=%s", loggable)
+    def create_order(self, **kwargs) -> Dict[str, Any]:
+        logger.info("Placing order — params=%s", kwargs)
 
         try:
             response = self._client.futures_create_order(**kwargs)
-            logger.info(
-                "Order accepted — orderId=%s status=%s executedQty=%s avgPrice=%s",
-                response.get("orderId"),
-                response.get("status"),
-                response.get("executedQty"),
-                response.get("avgPrice"),
-            )
             return response
-
         except BinanceAPIException as e:
             logger.error("Order API error — code=%s msg=%s", e.code, e.message)
             raise
@@ -116,10 +74,9 @@ class BinanceClient:
             logger.error("Order network error — %s", e)
             raise
 
-    # ── Account info ───────────────────────────────────────────────────────────
+    # ── Account info ───────────────────────────────────────
 
-    def get_account(self) -> dict:
-        """Fetch futures account details including balances and positions."""
+    def get_account(self) -> Dict[str, Any]:
         logger.info("Fetching account info")
         try:
             return self._client.futures_account()
@@ -127,17 +84,14 @@ class BinanceClient:
             logger.error("Account API error — code=%s msg=%s", e.code, e.message)
             raise
 
-    def get_open_orders(self, symbol: str = None) -> list:
-        """
-        Fetch open orders, optionally filtered by symbol.
+    def get_open_orders(self, symbol: str | None = None) -> List[Dict[str, Any]]:
+        params: Dict[str, Any] = {}
 
-        Args:
-            symbol: Optional trading pair filter, e.g. "BTCUSDT"
-        """
-        params = {}
         if symbol:
             params["symbol"] = symbol
+
         logger.info("Fetching open orders — symbol=%s", symbol or "ALL")
+
         try:
             return self._client.futures_get_open_orders(**params)
         except BinanceAPIException as e:
